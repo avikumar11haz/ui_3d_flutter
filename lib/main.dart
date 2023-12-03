@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:o3d/o3d.dart';
+import 'package:ui_3d/inverted_circle_clipper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue.shade50,
       body: Stack(
         children: [
           O3D(
@@ -62,11 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ],
           ),
-
           Container(
             width: 100,
             height: double.infinity,
-            color: Colors.blue,
             margin: const EdgeInsets.all(12),
             child: PageView(
               controller: textPageController,
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: double.infinity,
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
@@ -85,71 +85,145 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: double.infinity,
                       child: Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: FittedBox(
                               fit: BoxFit.fitWidth,
                               child: Text('87'),
                             ),
                           ),
                           Transform.translate(
-                            offset: Offset(0, 20),
-                              child: Text("%")),
+                              offset: const Offset(0, 20),
+                              child: const Text("%")),
                         ],
                       ),
-                    )
+                    ),
+                    const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Icon(
+                            Icons.local_fire_department_outlined,
+                            color: Colors.red,
+                          ),
+                        ),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("1,840"),
+                            Text(
+                              "Calories",
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.grey),
+                            ),
+                          ],
+                        ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Icon(
+                            Icons.do_not_step,
+                            color: Colors.purple,
+                          ),
+                        ),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("3,640"),
+                            Text(
+                              "Steps",
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.grey),
+                            ),
+                          ],
+                        ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Icon(
+                            Icons.hourglass_bottom,
+                            color: Colors.lightBlueAccent,
+                          ),
+                        ),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("6.5"),
+                            Text(
+                              "hours",
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.grey),
+                            ),
+                          ],
+                        ))
+                      ],
+                    ),
                   ],
                 ),
                 Column(
+                  children: [
+                    const SizedBox(
+                      width: double.infinity,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text('Journal'),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Transform.translate(
+                              offset: const Offset(0, 20),
+                              child: const Text("<")),
+                          const Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text('12'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Text(
+                      "July 2023",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    )
+                  ],
+                ),
+                const Column(
                   children: [
                     SizedBox(
                       width: double.infinity,
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
-                        child: Text('Daily Goals'),
+                        child: Text('Profile'),
                       ),
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text('87'),
-                            ),
-                          ),
-                          Transform.translate(
-                              offset: Offset(0, 20),
-                              child: Text("%")),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
                     SizedBox(
                       width: double.infinity,
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
-                        child: Text('Daily Goals'),
+                        child: Text('Liza'),
                       ),
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text('87'),
-                            ),
-                          ),
-                          Transform.translate(
-                              offset: Offset(0, 20),
-                              child: Text("%")),
-                        ],
-                      ),
+                    Text(
+                      "23 years old",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
                     )
                   ],
                 ),
@@ -161,8 +235,21 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: page,
         onTap: (page) {
-          mainPageController.animateToPage(page, duration: const Duration(milliseconds: 500), curve: Curves.ease);
-          textPageController.animateToPage(page, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+          mainPageController.animateToPage(page,
+              duration: const Duration(milliseconds: 500), curve: Curves.ease);
+          textPageController.animateToPage(page,
+              duration: const Duration(milliseconds: 500), curve: Curves.ease);
+
+          if (page == 0) {
+            o3dController.cameraTarget(-.25, 1.5, 1.5);
+            o3dController.cameraOrbit(0, 90, 1);
+          } else if (page == 1) {
+            o3dController.cameraTarget(0, 1.8, 0);
+            o3dController.cameraOrbit(-90, 90, 1.5);
+          } else if (page == 2) {
+            o3dController.cameraTarget(0, 3, 0);
+            o3dController.cameraOrbit(0, 90, -3);
+          }
 
           setState(() {
             this.page = page;
