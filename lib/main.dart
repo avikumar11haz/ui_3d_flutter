@@ -31,6 +31,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   O3DController o3dController = O3DController();
   PageController mainPageController = PageController();
+  PageController textPageController = PageController();
+  int page = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +45,129 @@ class _MyHomePageState extends State<MyHomePage> {
             ar: false,
             autoPlay: true,
             autoRotate: false,
+            cameraControls: false,
+            cameraTarget: CameraTarget(-.25, 1.5, 1.5),
+            cameraOrbit: CameraOrbit(0, 90, 1),
           ),
           PageView(
             controller: mainPageController,
-            children: [],
+            children: [
+              const Center(),
+              const Center(),
+              ClipPath(
+                clipper: InvertedCircleClipper(),
+                child: Container(
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
+
+          Container(
+            width: 100,
+            height: double.infinity,
+            color: Colors.blue,
+            margin: const EdgeInsets.all(12),
+            child: PageView(
+              controller: textPageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text('Daily Goals'),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text('87'),
+                            ),
+                          ),
+                          Transform.translate(
+                            offset: Offset(0, 20),
+                              child: Text("%")),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text('Daily Goals'),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text('87'),
+                            ),
+                          ),
+                          Transform.translate(
+                              offset: Offset(0, 20),
+                              child: Text("%")),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text('Daily Goals'),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text('87'),
+                            ),
+                          ),
+                          Transform.translate(
+                              offset: Offset(0, 20),
+                              child: Text("%")),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
           )
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: page,
+        onTap: (page) {
+          mainPageController.animateToPage(page, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+          textPageController.animateToPage(page, duration: const Duration(milliseconds: 500), curve: Curves.ease);
+
+          setState(() {
+            this.page = page;
+          });
+        },
         showUnselectedLabels: false,
         showSelectedLabels: false,
         items: const [
